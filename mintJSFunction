@@ -1,0 +1,34 @@
+//MINT FREE+PAID
+
+      const mintToken = async () => {
+        let value = ethers.constants.Zero;
+        if (quantity > 0 && quantity <= FREE_TOKEN_QUANTITY && !freeTokenUsed) {
+          setFreeTokenUsed(true);
+          const connection = contract.connect(signer);
+          const addr = connection.address;
+          const response = await contract.publicMint(BigNumber.from(quantity), {
+            value: ethers.constants.Zero,
+          });
+          console.log("response: ", response);
+        } else if (quantity > FREE_TOKEN_QUANTITY || freeTokenUsed) {
+          value = TOKEN_PRICE.mul(quantity);
+          const connection = contract.connect(signer);
+          const addr = connection.address;
+          const response = await contract.publicMint(BigNumber.from(quantity), {
+            value: value,
+          });
+          console.log("response: ", response);
+        }
+      };
+      
+      
+      //defaultmintfunction
+      
+            const mintToken1 = async () => {
+        const connection = contract.connect(signer);
+        const addr = connection.address;
+        const response = await contract.publicMint(BigNumber.from(quantity), {
+        value: ethers.utils.parseEther(('0.099' * quantity).toString()),
+        });
+        console.log("response: ", response);
+      }
